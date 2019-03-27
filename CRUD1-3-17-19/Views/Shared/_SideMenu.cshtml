@@ -1,0 +1,32 @@
+﻿
+<ul class="nav">
+    <!-- Main menu -->
+    @{
+        var list = (List<CRUD1_3_17_19.Models.PERMISOS>)Session["permisos"];
+        foreach (var item in list)
+        {
+            if (item.PERMISO_PADRE == null)
+            {
+                <li class="submenu">
+                    <a href="#">
+                        <i class="glyphicon glyphicon-list"></i> @Html.DisplayFor(modelItem => item.NOMBRE_PERMISO)
+                        <span class="caret pull-right"></span>
+                    </a>
+                    <ul>
+                        @foreach (var item1 in item.PERMISOS1)
+                        {
+                            <li>@Html.ActionLink(item1.NOMBRE_PERMISO, item1.ACTION, item1.CONTROLLER)</li>
+                            <!--firma actionlink:, nombreVista, metodo, controlador-->
+                        }
+                    </ul>
+                </li>
+            }
+        }
+    }
+    <!-- si los permisos no se hacen en una partialview, hay problemas porque el controler al que se
+        hace referencia, solo recibe un model, no dos (el el _Layout y la vista que se visita, esta monda la descubri de suerte xD)
+        Excepcion:
+        model item passed into the dictionary is of type 'System.Collections.Generic.List`1[CRUD1_3_17_19.Models.ALUMNO]',
+        but this dictionary requires a model item of type 'System.Collections.Generic.IEnumerable`1[CRUD1_3_17_19.Models.PERMISOS]'.-->
+    <!-- end Main menu -->
+</ul>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b6ee96c46dcf49edb780317ff1c692ef" Name="Diagram1" ZoomLevel="75">
+        <EntityTypeShape EntityType="ALUMNOS_DBModel.ALUMNO" Width="1.5" PointX="12.25" PointY="2" />
+        <EntityTypeShape EntityType="ALUMNOS_DBModel.PERMISOS" Width="1.5" PointX="2.125" PointY="1.625" />
+        <EntityTypeShape EntityType="ALUMNOS_DBModel.ROLES" Width="1.5" PointX="8.125" PointY="2.125" />
+        <EntityTypeShape EntityType="ALUMNOS_DBModel.ROLES_PERMISOS" Width="1.5" PointX="4.375" PointY="2" />
+        <AssociationConnector Association="ALUMNOS_DBModel.FK_ALUMNO_ROLES" />
+        <AssociationConnector Association="ALUMNOS_DBModel.FK_PERMISOS_PERMISOS" />
+        <AssociationConnector Association="ALUMNOS_DBModel.FK_ROLES_PERMISOS_PERMISOS" />
+        <AssociationConnector Association="ALUMNOS_DBModel.FK_ROLES_PERMISOS_ROLES" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

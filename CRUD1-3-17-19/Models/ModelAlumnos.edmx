@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ALUMNOS_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ALUMNO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBRES" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="APELLIDOS" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EDAD" Type="int" Nullable="false" />
+          <Property Name="SEXO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="FECHA-REGISTRO" Type="date" Nullable="false" />
+          <Property Name="ROLES_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="PERMISOS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBRE_PERMISO" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="URL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PERMISO_PADRE" Type="int" />
+          <Property Name="FAVICON" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CONTROLLER" Type="varchar" MaxLength="50" />
+          <Property Name="ACTION" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ROLES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBRE_ROL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ESTADO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ROLES_PERMISOS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ROL_ID" Type="int" Nullable="false" />
+          <Property Name="PERMISO_ID" Type="int" Nullable="false" />
+          <Property Name="FECHA ASIGNACION]" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ALUMNO_ROLES">
+          <End Role="ROLES" Type="Self.ROLES" Multiplicity="0..1" />
+          <End Role="ALUMNO" Type="Self.ALUMNO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ALUMNO">
+              <PropertyRef Name="ROLES_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERMISOS_PERMISOS">
+          <End Role="PERMISOS" Type="Self.PERMISOS" Multiplicity="0..1" />
+          <End Role="PERMISOS1" Type="Self.PERMISOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERMISOS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PERMISOS1">
+              <PropertyRef Name="PERMISO_PADRE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ROLES_PERMISOS_PERMISOS">
+          <End Role="PERMISOS" Type="Self.PERMISOS" Multiplicity="1" />
+          <End Role="ROLES_PERMISOS" Type="Self.ROLES_PERMISOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERMISOS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ROLES_PERMISOS">
+              <PropertyRef Name="PERMISO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ROLES_PERMISOS_ROLES">
+          <End Role="ROLES" Type="Self.ROLES" Multiplicity="1" />
+          <End Role="ROLES_PERMISOS" Type="Self.ROLES_PERMISOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ROLES_PERMISOS">
+              <PropertyRef Name="ROL_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ALUMNOS_DBModelStoreContainer">
+          <EntitySet Name="ALUMNO" EntityType="Self.ALUMNO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PERMISOS" EntityType="Self.PERMISOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROLES" EntityType="Self.ROLES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROLES_PERMISOS" EntityType="Self.ROLES_PERMISOS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ALUMNO_ROLES" Association="Self.FK_ALUMNO_ROLES">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="ALUMNO" EntitySet="ALUMNO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERMISOS_PERMISOS" Association="Self.FK_PERMISOS_PERMISOS">
+            <End Role="PERMISOS" EntitySet="PERMISOS" />
+            <End Role="PERMISOS1" EntitySet="PERMISOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLES_PERMISOS_PERMISOS" Association="Self.FK_ROLES_PERMISOS_PERMISOS">
+            <End Role="PERMISOS" EntitySet="PERMISOS" />
+            <End Role="ROLES_PERMISOS" EntitySet="ROLES_PERMISOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLES_PERMISOS_ROLES" Association="Self.FK_ROLES_PERMISOS_ROLES">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="ROLES_PERMISOS" EntitySet="ROLES_PERMISOS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ALUMNOS_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ALUMNOS_DBContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ALUMNO" EntityType="ALUMNOS_DBModel.ALUMNO" />
+          <EntitySet Name="PERMISOS" EntityType="ALUMNOS_DBModel.PERMISOS" />
+          <EntitySet Name="ROLES" EntityType="ALUMNOS_DBModel.ROLES" />
+          <EntitySet Name="ROLES_PERMISOS" EntityType="ALUMNOS_DBModel.ROLES_PERMISOS" />
+          <AssociationSet Name="FK_ALUMNO_ROLES" Association="ALUMNOS_DBModel.FK_ALUMNO_ROLES">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="ALUMNO" EntitySet="ALUMNO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERMISOS_PERMISOS" Association="ALUMNOS_DBModel.FK_PERMISOS_PERMISOS">
+            <End Role="PERMISOS" EntitySet="PERMISOS" />
+            <End Role="PERMISOS1" EntitySet="PERMISOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLES_PERMISOS_PERMISOS" Association="ALUMNOS_DBModel.FK_ROLES_PERMISOS_PERMISOS">
+            <End Role="PERMISOS" EntitySet="PERMISOS" />
+            <End Role="ROLES_PERMISOS" EntitySet="ROLES_PERMISOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLES_PERMISOS_ROLES" Association="ALUMNOS_DBModel.FK_ROLES_PERMISOS_ROLES">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="ROLES_PERMISOS" EntitySet="ROLES_PERMISOS" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ALUMNO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRES" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="APELLIDOS" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EDAD" Type="Int32" Nullable="false" />
+          <Property Name="SEXO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FECHA_REGISTRO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ROLES_ID" Type="Int32" />
+          <NavigationProperty Name="ROLES" Relationship="ALUMNOS_DBModel.FK_ALUMNO_ROLES" FromRole="ALUMNO" ToRole="ROLES" />
+        </EntityType>
+        <EntityType Name="PERMISOS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE_PERMISO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="URL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PERMISO_PADRE" Type="Int32" />
+          <Property Name="FAVICON" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CONTROLLER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ACTION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PERMISOS1" Relationship="ALUMNOS_DBModel.FK_PERMISOS_PERMISOS" FromRole="PERMISOS" ToRole="PERMISOS1" />
+          <NavigationProperty Name="PERMISOS2" Relationship="ALUMNOS_DBModel.FK_PERMISOS_PERMISOS" FromRole="PERMISOS1" ToRole="PERMISOS" />
+          <NavigationProperty Name="ROLES_PERMISOS" Relationship="ALUMNOS_DBModel.FK_ROLES_PERMISOS_PERMISOS" FromRole="PERMISOS" ToRole="ROLES_PERMISOS" />
+        </EntityType>
+        <EntityType Name="ROLES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE_ROL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ESTADO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ALUMNO" Relationship="ALUMNOS_DBModel.FK_ALUMNO_ROLES" FromRole="ROLES" ToRole="ALUMNO" />
+          <NavigationProperty Name="ROLES_PERMISOS" Relationship="ALUMNOS_DBModel.FK_ROLES_PERMISOS_ROLES" FromRole="ROLES" ToRole="ROLES_PERMISOS" />
+        </EntityType>
+        <EntityType Name="ROLES_PERMISOS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ROL_ID" Type="Int32" Nullable="false" />
+          <Property Name="PERMISO_ID" Type="Int32" Nullable="false" />
+          <Property Name="FECHA_ASIGNACION_" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="PERMISOS" Relationship="ALUMNOS_DBModel.FK_ROLES_PERMISOS_PERMISOS" FromRole="ROLES_PERMISOS" ToRole="PERMISOS" />
+          <NavigationProperty Name="ROLES" Relationship="ALUMNOS_DBModel.FK_ROLES_PERMISOS_ROLES" FromRole="ROLES_PERMISOS" ToRole="ROLES" />
+        </EntityType>
+        <Association Name="FK_ALUMNO_ROLES">
+          <End Type="ALUMNOS_DBModel.ROLES" Role="ROLES" Multiplicity="0..1" />
+          <End Type="ALUMNOS_DBModel.ALUMNO" Role="ALUMNO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ALUMNO">
+              <PropertyRef Name="ROLES_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERMISOS_PERMISOS">
+          <End Type="ALUMNOS_DBModel.PERMISOS" Role="PERMISOS" Multiplicity="0..1" />
+          <End Type="ALUMNOS_DBModel.PERMISOS" Role="PERMISOS1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERMISOS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PERMISOS1">
+              <PropertyRef Name="PERMISO_PADRE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ROLES_PERMISOS_PERMISOS">
+          <End Type="ALUMNOS_DBModel.PERMISOS" Role="PERMISOS" Multiplicity="1" />
+          <End Type="ALUMNOS_DBModel.ROLES_PERMISOS" Role="ROLES_PERMISOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERMISOS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ROLES_PERMISOS">
+              <PropertyRef Name="PERMISO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ROLES_PERMISOS_ROLES">
+          <End Type="ALUMNOS_DBModel.ROLES" Role="ROLES" Multiplicity="1" />
+          <End Type="ALUMNOS_DBModel.ROLES_PERMISOS" Role="ROLES_PERMISOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ROLES_PERMISOS">
+              <PropertyRef Name="ROL_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ALUMNOS_DBModelStoreContainer" CdmEntityContainer="ALUMNOS_DBContext">
+          <EntitySetMapping Name="ALUMNO">
+            <EntityTypeMapping TypeName="ALUMNOS_DBModel.ALUMNO">
+              <MappingFragment StoreEntitySet="ALUMNO">
+                <ScalarProperty Name="ROLES_ID" ColumnName="ROLES_ID" />
+                <ScalarProperty Name="FECHA_REGISTRO" ColumnName="FECHA-REGISTRO" />
+                <ScalarProperty Name="SEXO" ColumnName="SEXO" />
+                <ScalarProperty Name="EDAD" ColumnName="EDAD" />
+                <ScalarProperty Name="APELLIDOS" ColumnName="APELLIDOS" />
+                <ScalarProperty Name="NOMBRES" ColumnName="NOMBRES" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERMISOS">
+            <EntityTypeMapping TypeName="ALUMNOS_DBModel.PERMISOS">
+              <MappingFragment StoreEntitySet="PERMISOS">
+                <ScalarProperty Name="ACTION" ColumnName="ACTION" />
+                <ScalarProperty Name="CONTROLLER" ColumnName="CONTROLLER" />
+                <ScalarProperty Name="FAVICON" ColumnName="FAVICON" />
+                <ScalarProperty Name="PERMISO_PADRE" ColumnName="PERMISO_PADRE" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="NOMBRE_PERMISO" ColumnName="NOMBRE_PERMISO" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLES">
+            <EntityTypeMapping TypeName="ALUMNOS_DBModel.ROLES">
+              <MappingFragment StoreEntitySet="ROLES">
+                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+                <ScalarProperty Name="NOMBRE_ROL" ColumnName="NOMBRE_ROL" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLES_PERMISOS">
+            <EntityTypeMapping TypeName="ALUMNOS_DBModel.ROLES_PERMISOS">
+              <MappingFragment StoreEntitySet="ROLES_PERMISOS">
+                <ScalarProperty Name="FECHA_ASIGNACION_" ColumnName="FECHA ASIGNACION]" />
+                <ScalarProperty Name="PERMISO_ID" ColumnName="PERMISO_ID" />
+                <ScalarProperty Name="ROL_ID" ColumnName="ROL_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

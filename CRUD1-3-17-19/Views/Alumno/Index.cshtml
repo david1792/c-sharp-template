@@ -1,0 +1,83 @@
+﻿@model IEnumerable<CRUD1_3_17_19.Models.ALUMNO>
+
+@{
+    ViewBag.Title = "Lista de alumnos";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateOrEdit")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NOMBRES)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.APELLIDOS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EDAD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SEXO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FECHA_REGISTRO)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCompleto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.APELLIDOS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EDAD)
+            </td>
+            <td>
+                @{
+                    if (item.SEXO == "m")
+                    {
+                        <span>masculino</span>
+                    }
+                    else
+                    {
+                        <span>femenino</span>
+                    }
+
+                }
+
+            </td>
+            <td>
+                @item.FECHA_REGISTRO.ToShortDateString()
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Editar", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Detalle", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Borrar", new { id = item.ID }, new { @class = "eliminar" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts{
+    <script>
+        $(".eliminar").click(function (event) {
+            if (!confirm("Esta seguro de eliminar?")) {
+                event.preventDefault();
+            }
+
+        });
+
+        
+    </script>
+
+}

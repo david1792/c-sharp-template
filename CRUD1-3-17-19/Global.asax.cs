@@ -17,5 +17,11 @@ namespace CRUD1_3_17_19
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+        protected void Application_BeginRequest()//esta funcion evita que las paginas queden en cache y que el usuario pulse el boton atras y cargue el contenido
+        {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
+            Response.Cache.SetNoStore();
+        }
     }
 }
